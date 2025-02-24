@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 
 
@@ -9,9 +8,9 @@ int year, month, day, hour, minute;
 char Place[1000];
 char Rule_Selection[1000];
 char VideoGame[1000];
+int checkmark[4], checkmark_all_functions;
 
-    
-bool Upload_Rules()
+int Upload_Rules()
 {
 
     FILE *Rules = NULL;
@@ -30,45 +29,46 @@ bool Upload_Rules()
         }
 
     }
-    return true;
-
     fclose(Rules);
-
-
+    return checkmark[1]=1;
 
 }
 
-bool Video_Game_Name()
+int Video_Game_Name()
 {
     printf("\nInput Game Name: ");
-    scanf("%s", VideoGame);
-    return true;
+    getchar();
+    fgets(VideoGame, sizeof(VideoGame), stdin);
+    return checkmark[2]=1;
 }
 
-bool Time_and_Place()
+int Time_and_Place()
 {
     printf("\nEnter the date M/D/Y: ");
     scanf("%d/%d/%d", &month, &day, &year);
-    printf("\nEnter the time: ");
+    printf("\nEnter the time (HH:MM): ");
     scanf("%d:%d", &hour, &minute);
     printf("\nEnter the location of the place: ");
-    scanf("%s", Place);
-    return true;
+    getchar();
+    fgets(Place, sizeof(Place),stdin);
+    return checkmark[3]=1;
 }
 
 
-bool Pool_Prize_Money()
+int Pool_Prize_Money()
 {
     printf("\nEnter the Pool Prize: ");
     scanf("%f", &Pool_Prize);
-    return true;
+    return checkmark[4]=1;
+    
 }
 
-bool Number_of_People()
+int Number_of_People()
 {
     printf("\nEnter the max amount of people that can join: ");
     scanf("%d", &number_of_people);
-    return true;
+    return checkmark[5]=1;
+    
 }
 
 void Publish()
@@ -79,9 +79,9 @@ void Publish()
 }
 
 void Create_Tourtament()
-{   //
-    int game_tourtament_choice = 0
-    tournament:
+{   
+    int game_tourtament_choice = 0;
+    tourtament:
     printf("\n\n1. Upload Rules\n");
     printf("2. Video Game Name\n");
     printf("3. Time and Place\n");
@@ -93,24 +93,49 @@ void Create_Tourtament()
 
     printf("Please enter number: ");
     scanf("%d", &game_tourtament_choice);
-    
-    /*switch(game_tourtament_choose)
+
+    switch(game_tourtament_choice)
     {
         case 1:
             Upload_Rules();
+            goto tourtament;
             break;
         case 2:
             Video_Game_Name();
+            goto tourtament;
             break;
         case 3:
             Time_and_Place();
+            goto tourtament;
             break;
         case 4:
             Pool_Prize_Money();
+            goto tourtament;
             break;
         case 5:
             Number_of_People();
+            goto tourtament;
             break;     
+        case 6:
+            for (int i = 1; i <= 5; i++) //This makes sure that all the functions have been processed before going into the function Publish otherwise redirect user to the beggining
+            {
+                if(checkmark[i])
+                {
+                    checkmark_all_functions++;
+                }
+            }
+
+            if(checkmark_all_functions==5)
+            {
+                Publish();
+            }
+            else
+            {
+                printf("\nDidn't complete steps 1-5");
+                goto tourtament;
+            }
+
+            break;
         case 7:
             main();
             break;
@@ -118,11 +143,8 @@ void Create_Tourtament()
             printf("\nInvalid Option\n");
             goto tourtament;
         
-    } */
-    if(Upload_Rules() && Video_Game_Name() && Time_and_Place() && Pool_Prize_Money() && Number_of_People() == true)
-    {
-        Publish();
-    }
+    } 
+  
 }
 
 
