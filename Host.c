@@ -2,36 +2,33 @@
 #include <stdlib.h>
 
 
-float Pool_Prize;
-int number_of_people;
-int year, month, day, hour, minute; 
-char Place[1000];
-char Rule_Selection[1000];
-char VideoGame[1000];
-int checkmark[4], checkmark_all_functions;
+    float Pool_Prize;
+    int Num_Of_People;
+    char Place[1000], Time[10], Date[15];
+    char Rule_Selection[1000];
+    char VideoGame[1000];
+    int checkmark[4], checkmark_all_functions;
+
+
 
 int Upload_Rules()
 {
-
     FILE *Rules = NULL;
-    
-    while (1) {
-        printf("\nChoose a file: ");
-        scanf("%s", Rule_Selection);
-        Rules = fopen(Rule_Selection, "r");
-        if (Rules == NULL) {
-            printf("\nFile could not be found, please try again.\n");
-        }  
-        else 
-        {
-            printf("File opened successfully!\n");
-            break;  
-        }
-
+    printf("\nChoose a file: ");
+    scanf("%s", Rule_Selection);
+    Rules = fopen(Rule_Selection, "r");
+    if (Rules == NULL) 
+    {
+        printf("\nFile could not be found, please try again.\n");
+        return 0;
+    }  
+    else 
+    {
+        printf("File opened successfully!\n");
     }
+
     fclose(Rules);
     return checkmark[1]=1;
-
 }
 
 int Video_Game_Name()
@@ -45,11 +42,11 @@ int Video_Game_Name()
 int Time_and_Place()
 {
     printf("\nEnter the date M/D/Y: ");
-    scanf("%d/%d/%d", &month, &day, &year);
-    printf("\nEnter the time (HH:MM): ");
-    scanf("%d:%d", &hour, &minute);
-    printf("\nEnter the location of the place: ");
     getchar();
+    fgets(Date, sizeof(Date),stdin);
+    printf("\nEnter the time (AM or PM): ");
+    fgets(Time, sizeof(Time),stdin);
+    printf("\nEnter the location of the place: ");
     fgets(Place, sizeof(Place),stdin);
     return checkmark[3]=1;
 }
@@ -66,12 +63,12 @@ int Pool_Prize_Money()
 int Number_of_People()
 {
     printf("\nEnter the max amount of people that can join: ");
-    scanf("%d", &number_of_people);
+    scanf("%d", &Num_Of_People);
     return checkmark[5]=1;
     
 }
 
-void Publish()
+void Publish(char *Rule_Selection, char *VideoGame, char *Place, char *Time, char *Date, float Pool_Prize, int Num_Of_People)
 {
 
 
@@ -127,7 +124,7 @@ void Create_Tourtament()
 
             if(checkmark_all_functions==5)
             {
-                Publish();
+                Publish(Rule_Selection,VideoGame,Date,Time,Place,Pool_Prize,Num_Of_People);
             }
             else
             {
