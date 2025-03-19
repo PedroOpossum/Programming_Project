@@ -29,11 +29,8 @@ int Upload_Rules()
         printf("\nFile could not be found, please try again.\n");
         return 0;
     }  
-    else 
-    {
-        printf("File opened successfully!\n");
-    }
 
+    printf("File opened successfully!\n");
     fclose(Rules);
     return checkmark[0]=1;
 }
@@ -106,10 +103,8 @@ int Publish()
         {
             return current_tournament++;
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
+        
 }
 
 void Create_Tourtament()
@@ -180,7 +175,7 @@ int main(void)
         printf("\n1. Create a tourtament");
         printf("\n2. Exit\n");
         printf("\nPlease enter a number ");
-    scanf("%d", &main_menu_choice);
+        scanf("%d", &main_menu_choice);
         switch(main_menu_choice) 
         {
             case 1:
@@ -188,7 +183,6 @@ int main(void)
                 break;
             case 2:
                 exit(0);
-                break;
             default:
                 printf("\n Invalid Option \n");
 
