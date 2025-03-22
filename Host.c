@@ -5,15 +5,7 @@
 #define MAX_TOURNAMENTS 10
 
 
-struct Game_Tournament
-{
-    float Pool_Prize;
-    int Num_Of_People;
-    char Place[500], Time[10], Date[15];
-    char Rule_Selection[500];
-    char VideoGame[500];
-    
-} gt[MAX_TOURNAMENTS];
+struct Game_Tournament gt[MAX_TOURNAMENTS];
 
 int current_tournament = 0;
 int checkmark[4], checkmark_functions;
@@ -40,7 +32,7 @@ int Video_Game_Name()
     getchar();
     printf("\nInput Game Name: ");
     fgets(gt[current_tournament].VideoGame, sizeof(gt[current_tournament].VideoGame), stdin);
-    return checkmark[1]=1;
+    return checkmark[1]=1;current_tournament;
 }
 
 int Time_and_Place()
@@ -143,7 +135,7 @@ void Create_Tourtament()
                 checkmark_functions = 0;  
                 for (int i = 0; i <= 4; i++) //This makes sure that all the functions have been processed before going into the function Publish otherwise redirect user to the beggining
                 {
-                    if(checkmark[i] == 1)
+                    if(checkmark[i])
                     {
                         checkmark_functions++;
                     }
@@ -156,7 +148,7 @@ void Create_Tourtament()
                 printf("\nDidn't complete steps 1-5");
                 break;
             case 7:
-                main();
+                return;
                 break;
             default:
                 printf("\nInvalid Option\n");
@@ -166,15 +158,18 @@ void Create_Tourtament()
 }
 
 
-int main(void)
+void Host_Menu()
 {
-    int main_menu_choice = 0;
-
+    int main_menu_choice = 0;    
     do
     {
-        printf("\n1. Create a tourtament");
-        printf("\n2. Exit\n");
-        printf("\nPlease enter a number ");
+        
+        printf("\n\tHost Menu\n");
+        printf("----------------------------------\n");
+        printf("1. Create a tourtament");
+        printf("\n2. Go back\n");
+        printf("----------------------------------\n");
+        printf("Please enter a number ");
         scanf("%d", &main_menu_choice);
         switch(main_menu_choice) 
         {
@@ -182,7 +177,7 @@ int main(void)
                 Create_Tourtament();
                 break;
             case 2:
-                exit(0);
+                return;
             default:
                 printf("\n Invalid Option \n");
 
