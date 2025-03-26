@@ -3,20 +3,50 @@
 #include <time.h>
 #include "Host.h"
 
+void User_Menu();
 
-void Ticket_Generator() 
+void Dropout();
+
+void List_Menu();
+void Ticket_Generator() ;
+
+
+
+void User_Menu()
 {
-
     
-    srand(time(0));
-    for (int i = 0; i<20; i++)
+    int main_menu_choose = 0;
+    while(1)
     {
-        int random_number = rand()%9+1;
-        printf("%d", random_number);
-    }
+        printf("\n\tUser Menu\n");
+        printf("----------------------------------");
+        printf("\n1. Apply for a game");
+        printf("\n2. Drop-out");
+        printf("\n3. Go back\n");
+        printf("-----------------------------------");
+        printf("\nPlease enter a number ");
+        scanf("%d", &main_menu_choose);
+        switch(main_menu_choose) 
+        {
+            case 1:
+                List_Menu();           
+                break;
+            case 2:
+                Dropout();
+                break;
+            case 3: 
+                return;
+            default:
+                printf("\nInvalid Option\n");
+        } 
+    }  
 }
-void Apply()
-{
+
+
+
+void List_Menu()
+{   
+    
     int apply_option = 0;
     printf("\nPlease select which one you want to apply to from the list: ");
     scanf("%d", &apply_option);
@@ -30,40 +60,25 @@ void Apply()
 
 }
 
+
+void Ticket_Generator()
+{
+
+    
+    srand(time(0));
+    for (int i = 0; i<20; i++)
+    {
+        int random_number = rand()%9+1;
+        printf("%d", random_number);
+    }
+}
+
+
+
 void Dropout()
 {
 
 
 
-}
-
-
-void User_Menu()
-{
-    printf("\n\tUser Menu\n");
-    printf("----------------------------------");
-    printf("\n1. Apply for a game");
-    printf("\n2. Drop-out");
-    printf("\n3. Go back\n");
-    printf("-----------------------------------\n");
-    int main_menu_choose = 0;
-    do
-    {
-        printf("Please enter a number ");
-        scanf("%d", &main_menu_choose);
-        switch(main_menu_choose) 
-        {
-            case 1:
-                Apply();           
-                break;
-            case 2:
-                Dropout();
-                break;
-            case 3: 
-                return;
-            default:
-                printf("\nInvalid Option\n");
-        } 
-    }   while (main_menu_choose!=3);
 }
 

@@ -10,7 +10,8 @@ int main(void)
 {
     int choice;
     
-    do { 
+    while(1)
+    {
         printf("\n\tVideo Game Tournament\n");
         printf("----------------------------------\n");
         printf("1. Host Menu\n");
@@ -22,17 +23,17 @@ int main(void)
         switch(choice) 
         {
             case 1:
-                Host_Menu();  // Call the host menu
+                Host_Menu();  
                 break;
             case 2:
-                User_Menu();  // Call the user menu
+                User_Menu();  
                 break;
             case 3:
                 exit(0);
             default:
                 printf("Invalid option, try again.\n");
         }
-    } while(choice != 3);
+    } 
 
     return 0;
 }
