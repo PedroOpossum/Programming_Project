@@ -1,42 +1,84 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include "Host.h"
+
+void User_Menu();
+
+void Dropout();
+
+void List_Menu();
+void Ticket_Generator() ;
 
 
-void Creating_Main_Menu_Screen()
+
+void User_Menu()
 {
-
-    printf("\n\tVideo Game Tournament\n");
-
-    printf("----------------------------------\n");
+    
     int main_menu_choose = 0;
-    main_menu:
-    printf("1. Apply for a game\n");
-    printf("2. Drop-out\n");
-    printf("3. Exit\n");
-    printf("-----------------------------------\n");
-
-    printf("Please enter a number ");
-    scanf("%d", &main_menu_choose);
-    switch(main_menu_choose) 
+    while(1)
     {
-        case 1:
-            
-            break;
-
-        case 2:
-            
-            break;
-        case 3: 
-            exit(0);
-            break;
-        default:
-            goto main_menu;
-
-    }   
+        printf("\n\tUser Menu\n");
+        printf("----------------------------------");
+        printf("\n1. Apply for a game");
+        printf("\n2. Drop-out");
+        printf("\n3. Go back\n");
+        printf("-----------------------------------");
+        printf("\nPlease enter a number ");
+        scanf("%d", &main_menu_choose);
+        switch(main_menu_choose) 
+        {
+            case 1:
+                List_Menu();           
+                break;
+            case 2:
+                Dropout();
+                break;
+            case 3: 
+                return;
+            default:
+                printf("\nInvalid Option\n");
+        } 
+    }  
 }
 
-int main(void)
+
+
+void List_Menu()
+{   
+    
+    int apply_option = 0;
+    printf("\nPlease select which one you want to apply to from the list: ");
+    scanf("%d", &apply_option);
+    switch(apply_option)
+    {
+
+        default:
+            printf("\nNot on the list, please try again\n\n");
+
+    }
+
+}
+
+
+void Ticket_Generator()
 {
-    Creating_Main_Menu_Screen();
+
+    
+    srand(time(0));
+    for (int i = 0; i<20; i++)
+    {
+        int random_number = rand()%9+1;
+        printf("%d", random_number);
+    }
+}
+
+
+
+void Dropout()
+{
+
+
+
 }
 

@@ -1,21 +1,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-
+#include "Host.h"
 #define MAX_TOURNAMENTS 10
 
-struct Game_Tournament
-{
-    float Pool_Prize;
-    int Num_Of_People;
-    char Place[500], Time[10], Date[15];
-    char Rule_Selection[500];
-    char VideoGame[500];
-    
-} gt[MAX_TOURNAMENTS];
+
+struct Game_Tournament gt[MAX_TOURNAMENTS];
 
 int current_tournament = 0;
 int checkmark[4], checkmark_functions;
+
+void Create_Tournament();
+int Upload_Rules();
+int Video_Game_Name();
+int Time_and_Place();
+int Pool_Prize_Money();
+int Number_of_People();
+int Publish();
+
+void Host_Menu()
+{
+    int main_menu_choice = 0;    
+    while(1)
+    {
+        
+        printf("\n\tHost Menu\n");
+        printf("----------------------------------\n");
+        printf("1. Create a tourtament");
+        printf("\n2. Go back\n");
+        printf("----------------------------------\n");
+        printf("Please enter a number ");
+        scanf("%d", &main_menu_choice);
+        switch(main_menu_choice) 
+        {
+            case 1:
+                Create_Tournament();
+                break;
+            case 2:
+                return;
+            default:
+                printf("\n Invalid Option \n");
+
+        }
+    } 
+
+}
+
+
+void Create_Tournament()
+{   
+    int game_tourtament_choice;
+    while(1)
+    {
+        printf("\n\n1. Upload Rules\n");
+        printf("2. Video Game Name\n");
+        printf("3. Time and Place\n");
+        printf("4. The Pool Prize Amount\n");
+        printf("5. Number of People\n");
+        printf("6. Publish\n");
+        printf("7. Go Back\n\n");
+    
+
+        printf("Please enter number: ");
+        scanf("%d", &game_tourtament_choice);
+        switch(game_tourtament_choice)
+        {
+            case 1:
+                Upload_Rules();
+                break;
+            case 2:
+                Video_Game_Name();
+                break;
+            case 3:
+                Time_and_Place();
+                break;
+            case 4:
+                Pool_Prize_Money();
+                break;
+            case 5:
+                Number_of_People();
+                break;
+            case 6:
+                checkmark_functions = 0;  
+                for (int i = 0; i <= 4; i++) //This makes sure that all the functions have been processed before going into the function Publish otherwise redirect user to the beggining
+                {
+                    if(checkmark[i])
+                    {
+                        checkmark_functions++;
+                    }
+                }
+                if(checkmark_functions==5)
+                {
+                    Publish();
+                    break;
+                }
+                printf("\nDidn't complete steps 1-5");
+                break;
+            case 7:
+                return;
+                break;
+            default:
+                printf("\nInvalid Option\n");
+            
+        }
+    } 
+}
 
 int Upload_Rules()
 {
@@ -28,27 +117,24 @@ int Upload_Rules()
         printf("\nFile could not be found, please try again.\n");
         return 0;
     }  
-    else 
-    {
-        printf("File opened successfully!\n");
-    }
 
+    printf("File opened successfully!\n");
     fclose(Rules);
     return checkmark[0]=1;
 }
 
 int Video_Game_Name()
 {
-    printf("\nInput Game Name: ");
     getchar();
+    printf("\nInput Game Name: ");
     fgets(gt[current_tournament].VideoGame, sizeof(gt[current_tournament].VideoGame), stdin);
     return checkmark[1]=1;
 }
 
 int Time_and_Place()
-{
-    printf("\nEnter the date M/D/Y: ");
+{   
     getchar();
+    printf("\nEnter the date M/D/Y: ");
     fgets(gt[current_tournament].Date, sizeof(gt[current_tournament].Date),stdin);
     printf("\nEnter the time (AM or PM): ");
     fgets(gt[current_tournament].Time, sizeof(gt[current_tournament].Time),stdin);
@@ -78,12 +164,16 @@ int Number_of_People()
 int Publish()
 {       
         char answer;
-
+        
+        for(int i = 0; i <=4; i++)
+        {
+            checkmark[i] = 0;
+        }
         printf("\nPublishing Tournament:\n");
 
         for(int i = 0; i <= current_tournament; i++)
         {
-            printf("Tournament #%d\n", i);
+            printf("Tournament #%d\n", i+1);
             printf("\nGame Name: %s", gt[i].VideoGame);
             printf("Rules: %s", gt[i].Rule_Selection);
             printf("\nDate: %s", gt[i].Date);
@@ -97,103 +187,11 @@ int Publish()
         getchar();
         scanf("%c",&answer);
         answer = tolower(answer);
-        if (answer == 'y' && current_tournament < MAX_TOURNAMENTS)
+        if (answer == 'y' && current_tournament <= MAX_TOURNAMENTS)
         {
             return current_tournament++;
         }
-        else
-        {
-            return 0;
-        }
-}
-
-void Create_Tourtament()
-{   
-    
-    int game_tourtament_choice = 0;
-    tourtament:
-    printf("\n\n1. Upload Rules\n");
-    printf("2. Video Game Name\n");
-    printf("3. Time and Place\n");
-    printf("4. The Pool Prize Amount\n");
-    printf("5. Number of People\n");
-    printf("6. Publish\n");
-    printf("7. Go Back\n\n");
- 
-
-    printf("Please enter number: ");
-    scanf("%d", &game_tourtament_choice);
-
-    switch(game_tourtament_choice)
-    {
-        case 1:
-            Upload_Rules();
-            goto tourtament;
-        case 2:
-            Video_Game_Name();
-            goto tourtament;
-        case 3:
-            Time_and_Place();
-            goto tourtament;
-        case 4:
-            Pool_Prize_Money();
-            goto tourtament;
-        case 5:
-            Number_of_People();
-            goto tourtament;
-        case 6:
-            for (int i = 0; i <= 4; i++) //This makes sure that all the functions have been processed before going into the function Publish otherwise redirect user to the beggining
-            {
-                if(checkmark[i] == 1)
-                {
-                    checkmark_functions++;
-                }
-            }
-
-            if(checkmark_functions==5)
-            {
-                Publish();
-                goto tourtament;
-            }
-            else
-            {
-                printf("\nDidn't complete steps 1-5");
-                goto tourtament;
-            }
-        case 7:
-            main();
-        default:
-            printf("\nInvalid Option\n");
-            goto tourtament;
+        return 0;
         
-    
-    } 
 }
 
-
-int main(void)
-{
-    int main_menu_choice = 0;
-
-    main_menu:
-    printf("1. Create a tourtament\n");
-    printf("2. Settings\n");
-    printf("3. Exit\n");
-
-    printf("Please enter a number ");
-    scanf("%d", &main_menu_choice);
-    switch(main_menu_choice) 
-    {
-        case 1:
-            Create_Tourtament();
-        case 2:
-            break;
-        case 3:
-            exit(0);
-        default:
-            printf("\n Invalid Option \n");
-            goto main_menu;
-
-    }   
-
-}
