@@ -4,9 +4,7 @@
 #include "Host.h"
 
 void User_Menu();
-
 void Dropout();
-
 void List_Menu();
 void Ticket_Generator() ;
 
@@ -17,7 +15,7 @@ void User_Menu()
     
     int main_menu_choose = 0;
     while(1)
-    {
+    {   
         printf("\n\tUser Menu\n");
         printf("----------------------------------");
         printf("\n1. Apply for a game");
@@ -48,16 +46,13 @@ void List_Menu()
 {   
     
     int apply_option = 0;
-    printf("\nPlease select which one you want to apply to from the list: ");
-    scanf("%d", &apply_option);
-    switch(apply_option)
+    int increase = 0;
+    printf("\nPlease select which one you want to apply to from the list: \n\n");
+    for (int i = 0; i<=current_tournament; i++)
     {
-
-        default:
-            printf("\nNot on the list, please try again\n\n");
-
+        printf("%d. %s \t%d/%d \n", gt[i].id, gt[i].VideoGame, increase, gt[i].Num_Of_People);
     }
-
+ 
 }
 
 

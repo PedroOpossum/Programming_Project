@@ -164,6 +164,7 @@ int Number_of_People()
 int Publish()
 {       
         char answer;
+        gt[current_tournament].id = current_tournament + 1;
         
         for(int i = 0; i <=4; i++)
         {
@@ -173,7 +174,7 @@ int Publish()
 
         for(int i = 0; i <= current_tournament; i++)
         {
-            printf("Tournament #%d\n", i+1);
+            printf("Tournament #%d\n", gt[i].id);
             printf("\nGame Name: %s", gt[i].VideoGame);
             printf("Rules: %s", gt[i].Rule_Selection);
             printf("\nDate: %s", gt[i].Date);
