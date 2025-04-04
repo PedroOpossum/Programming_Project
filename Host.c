@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include "Host.h"
 #define MAX_TOURNAMENTS 10
 
@@ -8,7 +9,7 @@
 struct Game_Tournament gt[MAX_TOURNAMENTS];
 
 int current_tournament = 0;
-int checkmark[4], checkmark_functions;
+int checkmark[5], checkmark_functions;
 
 void Create_Tournament();
 int Upload_Rules();
@@ -17,6 +18,7 @@ int Time_and_Place();
 int Pool_Prize_Money();
 int Number_of_People();
 int Publish();
+
 
 void Host_Menu()
 {
@@ -111,6 +113,7 @@ int Upload_Rules()
     FILE *Rules = NULL;
     printf("\nChoose a file: ");
     scanf("%s", gt[current_tournament].Rule_Selection);
+    gt[current_tournament].Rule_Selection[strcspn(gt[current_tournament].Rule_Selection, "\n")] = 0;
     Rules = fopen(gt[current_tournament].Rule_Selection, "r");
     if (Rules == NULL) 
     {
@@ -128,6 +131,7 @@ int Video_Game_Name()
     getchar();
     printf("\nInput Game Name: ");
     fgets(gt[current_tournament].VideoGame, sizeof(gt[current_tournament].VideoGame), stdin);
+    gt[current_tournament].VideoGame[strcspn(gt[current_tournament].VideoGame, "\n")] = 0;
     return checkmark[1]=1;
 }
 
@@ -136,10 +140,13 @@ int Time_and_Place()
     getchar();
     printf("\nEnter the date M/D/Y: ");
     fgets(gt[current_tournament].Date, sizeof(gt[current_tournament].Date),stdin);
+    gt[current_tournament].Date[strcspn(gt[current_tournament].Date, "\n")] = 0; 
     printf("\nEnter the time (AM or PM): ");
     fgets(gt[current_tournament].Time, sizeof(gt[current_tournament].Time),stdin);
+    gt[current_tournament].Time[strcspn(gt[current_tournament].Time, "\n")] = 0;
     printf("\nEnter the location of the place: ");
     fgets(gt[current_tournament].Place, sizeof(gt[current_tournament].Place),stdin);
+    gt[current_tournament].Place[strcspn(gt[current_tournament].Place, "\n")] = 0;
     return checkmark[2]=1;
 }
 
@@ -156,7 +163,7 @@ int Pool_Prize_Money()
 int Number_of_People()
 {
     printf("\nEnter the max amount of people that can join: ");
-    scanf("%d", &gt[current_tournament].Num_Of_People);
+    scanf("%d", &gt[current_tournament].totalNumOfPeople);
     return checkmark[4]=1;
     
 }
@@ -164,8 +171,6 @@ int Number_of_People()
 int Publish()
 {       
         char answer;
-        gt[current_tournament].id = current_tournament + 1;
-        
         for(int i = 0; i <=4; i++)
         {
             checkmark[i] = 0;
@@ -174,14 +179,14 @@ int Publish()
 
         for(int i = 0; i <= current_tournament; i++)
         {
-            printf("Tournament #%d\n", gt[i].id);
+            printf("Tournament #%d\n", i+1);
             printf("\nGame Name: %s", gt[i].VideoGame);
-            printf("Rules: %s", gt[i].Rule_Selection);
+            printf("\nRules: %s", gt[i].Rule_Selection);
             printf("\nDate: %s", gt[i].Date);
-            printf("Time: %s", gt[i].Time);
-            printf("Place: %s", gt[i].Place);
-            printf("Pool Prize: %.2f", gt[i].Pool_Prize);
-            printf("\nNumber of People: %d\n\n", gt[i].Num_Of_People);
+            printf("\nTime: %s", gt[i].Time);
+            printf("\nPlace: %s", gt[i].Place);
+            printf("\nPool Prize: %.2f", gt[i].Pool_Prize);
+            printf("\nNumber of People: %d\n\n", gt[i].totalNumOfPeople);
         }
 
         printf("Would you like to host another tournament? (Y/N)\n");

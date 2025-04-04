@@ -6,8 +6,8 @@
 void User_Menu();
 void Dropout();
 void List_Menu();
-void Ticket_Generator() ;
-
+void Final_Confirmation(int list_choice);
+int Ticket_Generator(int list_choice);
 
 
 void User_Menu()
@@ -44,19 +44,67 @@ void User_Menu()
 
 void List_Menu()
 {   
-    
-    int apply_option = 0;
-    int increase = 0;
-    printf("\nPlease select which one you want to apply to from the list: \n\n");
-    for (int i = 0; i<=current_tournament; i++)
+    while(1)
     {
-        printf("%d. %s \t%d/%d \n", gt[i].id, gt[i].VideoGame, increase, gt[i].Num_Of_People);
+        int list_choice = 0;
+        printf("\nPlease select which one you want to apply to from the list: \n\n");
+        for (int i = 0; i<=current_tournament; i++)
+        {
+            printf("%d. %s\t Prize: %.2f\t%d/%d \n", i+1, gt[i].VideoGame, gt[i].Pool_Prize, gt[i].NumOfPeople, gt[i].totalNumOfPeople);
+        }
+
+        printf("\n\nEnter Number: ");
+        scanf("%d", &list_choice);
+        if(list_choice<MAX_TOURNAMENTS||list_choice>0)
+        {
+            list_choice-=1; //minus 1 to point to the correct list
+            Final_Confirmation(list_choice);
+            return;
+        }
+        printf("Not in the list");
     }
  
 }
 
 
-void Ticket_Generator()
+
+void Final_Confirmation(int list_choice)
+{
+    while(1)
+    {
+        int usernum = 0; 
+        printf("\n1. View Rules\n");
+        printf("2. View Date, Time, Place\n");
+        printf("3. Apply Option\n");
+        printf("4. Back\n\n");
+
+        printf("Please enter number: ");
+        scanf("%d", &usernum);
+        
+        switch(usernum)
+        {
+            case 1:
+
+                break;
+            case 2:
+                printf("\nDate: %s Time: %s Place: %s\n\n", gt[list_choice].Date, gt[list_choice].Time, gt[list_choice].Place); 
+                break;
+            case 3:
+                Ticket_Generator(list_choice);
+                return;
+            case 4:
+                return;
+            default:
+            printf("\nSorry. The number given does not exist!\n\n");
+
+
+        }
+    }
+}
+
+
+
+int Ticket_Generator(int list_choice)
 {
 
     
@@ -66,6 +114,7 @@ void Ticket_Generator()
         int random_number = rand()%9+1;
         printf("%d", random_number);
     }
+    return gt[list_choice].NumOfPeople +=1;
 }
 
 
