@@ -18,6 +18,7 @@ int Time_and_Place();
 int Pool_Prize_Money();
 int Number_of_People();
 int Publish();
+void View_Tickets();
 
 
 void Host_Menu()
@@ -84,11 +85,15 @@ void Create_Tournament()
                 break;
             case 6:
                 checkmark_functions = 0;  
-                for (int i = 0; i <= 4; i++) //This makes sure that all the functions have been processed before going into the function Publish otherwise redirect user to the beggining
+                for (int i = 0; i <= 4; i++) //This makes sure that all the functions have been processed before going into the function Publish otherwise redirect user to the begining
                 {
                     if(checkmark[i])
                     {
                         checkmark_functions++;
+                    }
+                    else
+                    {
+                        printf("\nDidn't complete step %d", i+1);
                     }
                 }
                 if(checkmark_functions==5)
@@ -96,7 +101,6 @@ void Create_Tournament()
                     Publish();
                     break;
                 }
-                printf("\nDidn't complete steps 1-5");
                 break;
             case 7:
                 return;
@@ -137,17 +141,56 @@ int Video_Game_Name()
 
 int Time_and_Place()
 {   
-    getchar();
-    printf("\nEnter the date M/D/Y: ");
-    fgets(gt[current_tournament].Date, sizeof(gt[current_tournament].Date),stdin);
-    gt[current_tournament].Date[strcspn(gt[current_tournament].Date, "\n")] = 0; 
-    printf("\nEnter the time (AM or PM): ");
-    fgets(gt[current_tournament].Time, sizeof(gt[current_tournament].Time),stdin);
-    gt[current_tournament].Time[strcspn(gt[current_tournament].Time, "\n")] = 0;
+   int mm, dd, yyyy;
+   char date_input[11];
+   getchar();
+
+   while(1)
+   {
+       printf("\nEnter the date MM/DD/YYYY: ");
+       fgets(date_input, sizeof(date_input),stdin);
+       date_input[strcspn(date_input, "\n")] = 0;
+       if (sscanf(date_input, "%2d/%2d/%4d", &mm, &dd, &yyyy) == 3 && mm >= 1 && mm <= 12 && dd >= 1 && dd <= 31 && yyyy >= 1900 && yyyy <= 2100)
+       {
+           strcpy(gt[current_tournament].Date, date_input); /*This validates the input before it is put into the structure.*/
+           break;
+       }
+       else
+       {
+           printf("Invalid format. Please use MM/DD/YYYY.\n");
+       }
+   }
+   char time_input[10], am_pm[3];
+   int hour, min;
+   getchar();
+
+   while(1)
+   {
+       printf("\nEnter the time HH:MM (AM or PM): ");
+       fgets(time_input, sizeof(time_input),stdin);
+       time_input[strcspn(time_input, "\n")] = 0;
+
+
+       if (sscanf(time_input, "%2d:%2d %2s", &hour, &min, am_pm) == 3 && hour >= 1 && hour <= 12 && min >= 0 && min <= 59 &&
+           (strcasecmp(am_pm, "AM") == 0 || strcasecmp(am_pm, "PM") == 0))
+       {
+           strcpy(gt[current_tournament].Time, time_input); /*This vlidates the input before it is put into the structure.*/
+           break;
+       }
+       else
+       {
+           printf("Invalid format. Please use (HH:MM AM/PM).\n");
+       }
+   }  
+
+
     printf("\nEnter the location of the place: ");
     fgets(gt[current_tournament].Place, sizeof(gt[current_tournament].Place),stdin);
     gt[current_tournament].Place[strcspn(gt[current_tournament].Place, "\n")] = 0;
-    return checkmark[2]=1;
+    
+   return checkmark[2]=1;
+  
+
 }
 
 
@@ -200,4 +243,32 @@ int Publish()
         return 0;
         
 }
+
+
+void View_Ticket()
+{
+ 
+    int choice;
+
+    printf("Please type in which game tournament you want to view from the list: \n\n");
+    for(int i=0; i<current_tournament; i++)
+    {   
+        printf("%d. %s\n", i+1, gt[i].VideoGame);
+    }
+    scanf("%d", &choice);
+    choice-=1;
+    FILE *ID_File = fopen("ID.txt", "r");
+    if (ID_File == NULL) 
+    {
+        printf("Error: Could not open rules file!\n");
+        return;
+    }
+
+    // Print the rules of the selected tournament
+    fclose(ID_File); // Close the file after printing
+
+
+
+}
+
 

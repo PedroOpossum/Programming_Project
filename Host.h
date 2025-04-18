@@ -16,7 +16,6 @@ struct Game_Tournament {
 
 extern struct Game_Tournament gt[MAX_TOURNAMENTS]; 
 extern int current_tournament;
-
 #endif
 
 
