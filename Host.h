@@ -5,7 +5,7 @@
 #define MAX_TOURNAMENTS 10
 
 struct Game_Tournament {
-    char Rule_Selection[500];
+    char Rule_Selection[100];
     char VideoGame[500];  
     char Place[500], Time[10], Date[15];
     float Pool_Prize;
@@ -16,6 +16,9 @@ struct Game_Tournament {
 
 extern struct Game_Tournament gt[MAX_TOURNAMENTS]; 
 extern int current_tournament;
+extern void Main_Menu();
+
+
 #endif
 
 
