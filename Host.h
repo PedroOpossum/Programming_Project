@@ -5,13 +5,20 @@
 #define MAX_TOURNAMENTS 10
 
 struct Game_Tournament {
-    float Pool_Prize;
-    int Num_Of_People;
+    char Rule_Selection[100];
+    char VideoGame[500];  
     char Place[500], Time[10], Date[15];
-    char Rule_Selection[500];
-    char VideoGame[500];
+    float Pool_Prize;
+    int NumOfPeople;
+    int totalNumOfPeople;
 };
 
+
 extern struct Game_Tournament gt[MAX_TOURNAMENTS]; 
+extern int current_tournament;
+extern void Main_Menu();
+
 
 #endif
+
+
