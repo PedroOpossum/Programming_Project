@@ -91,7 +91,7 @@ void List_Menu()
     if(current_tournament == 0)
     {
         printf("\n\nThere are no tournaments at the current moment\n\n");
-        return;
+        Main_Menu();
     }
 
     while(1)
